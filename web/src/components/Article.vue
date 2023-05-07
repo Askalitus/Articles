@@ -2,15 +2,25 @@
     <div class="article">
         <p class="title">{{ props.article.title }}</p>
         <p class="desc">{{ props.article.description }}</p>
+        <p class="comment">Комментарии:</p>
+        <div v-for="comment in comments" :key="comment.id">
+            {{ comment.text }}
+        </div>
     </div>
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { computed, onMounted, ref } from 'vue';
 export default {
     props: {article: Object},
     setup (props) {
-        
-        return {props}
+        const store = useStore()
+
+        onMounted(() => store.dispatch('getComments', props.article.id))
+
+        const comments = store.state.comments
+        return {props, comments}
     }
 }
 </script>

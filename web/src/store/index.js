@@ -106,7 +106,7 @@ export default createStore({
 
         // геттеры для комментариев
         comments(state){
-            return state.comments
+            return state.comments.reverse()
         },
         comment(state){
             return state.comment
