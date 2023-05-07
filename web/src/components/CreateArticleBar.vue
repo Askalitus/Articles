@@ -21,7 +21,11 @@ export default {
         let title = ref('')
         let description = ref('')
 
-        const createArticle = () => store.dispatch('addArticle', {title: title.value, description: description.value})
+        const createArticle = () => {
+            store.dispatch('addArticle', {title: title.value, description: description.value})
+            title.value = ''
+            description.value = ''
+        }
 
         return {title, description, createArticle}
     }

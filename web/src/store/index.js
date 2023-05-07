@@ -80,7 +80,7 @@ export default createStore({
                 .post('http://localhost:8080/article/' + articleId + '/comment', {
                     text: text
                 })
-                .then(res => this.dispatch('getComments'))
+                .then(res => this.dispatch('getComments', articleId))
         },
         updateComment({}, {id, articleId, text}){
             axios
@@ -106,7 +106,7 @@ export default createStore({
 
         // геттеры для комментариев
         comments(state){
-            return state.comments.reverse()
+            return state.comments
         },
         comment(state){
             return state.comment

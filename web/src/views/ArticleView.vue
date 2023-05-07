@@ -11,6 +11,7 @@
         {{ comment.text }}
       </div>
     </div>
+    <CreateCommentVue />
   </div>
 </template>
 
@@ -18,7 +19,9 @@
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+import CreateCommentVue from '../components/CreateComment.vue'
 export default {
+  components: { CreateCommentVue },
   setup () {
     const store = useStore()
     const route = useRoute()
@@ -52,6 +55,7 @@ export default {
 }
 .desc{
     margin-top: 10px;
+    word-wrap: break-word;
 }
 .comments{
   padding: 10px;
@@ -62,6 +66,7 @@ export default {
   margin-top: 10px;
   border-top: 1px solid black;
   padding-top: 10px;
+  word-wrap: break-word;
 }
 .comments_title{
   font-size: 20px;
