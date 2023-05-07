@@ -1,26 +1,19 @@
 <template>
-    <div class="article">
+    <div @click="showArticle" class="article">
         <p class="title">{{ props.article.title }}</p>
         <p class="desc">{{ props.article.description }}</p>
-        <p class="comment">Комментарии:</p>
-        <div v-for="comment in comments" :key="comment.id">
-            {{ comment.text }}
-        </div>
     </div>
 </template>
 
 <script>
-import { useStore } from 'vuex';
-import { computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router'
 export default {
     props: {article: Object},
     setup (props) {
-        const store = useStore()
+        const router = useRouter()
 
-        onMounted(() => store.dispatch('getComments', props.article.id))
-
-        const comments = store.state.comments
-        return {props, comments}
+        const showArticle = () => router.push('/article/' + props.article.id)
+        return {props, showArticle}
     }
 }
 </script>
@@ -31,6 +24,11 @@ export default {
     border: 1px solid black;
     width: 500px;
     margin-top: 30px;
+}
+.article:hover{
+    background: black;
+    color: white;
+    cursor: pointer;
 }
 .title{
     font-size: 20px;
