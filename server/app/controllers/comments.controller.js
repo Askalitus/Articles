@@ -51,7 +51,7 @@ exports.findByDate = (req, res) => {
             [Op.lte]: dateTo,
             [Op.gte]: dateFrom
         }
-    }})
+    }, order: ['articleId']})
       .then(data => {
         res.send(data);
       })
