@@ -13,13 +13,16 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 const db = require("./app/models");
-db.sequelize.sync({force:true})
+db.sequelize.sync({force:false})
   .then(() => {
     console.log("Synced db.");
   })
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
   });
+
+require("./app/routes/article.routes.js")(app);
+require("./app/routes/comment.routes.js")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -15,6 +15,7 @@ db.sequelize = sequelize;
 db.articles = require("./article.model.js")(sequelize, Sequelize);
 db.comments = require("./comment.model.js")(sequelize, Sequelize);
 
-db.articles.hasOne(db.comments, {onDelete: "cascade"});
+db.articles.hasMany(db.comments, {onDelete: "cascade"});
+db.comments.belongsTo(db.articles)
 
 module.exports = db;

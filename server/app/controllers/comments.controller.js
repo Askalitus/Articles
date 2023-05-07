@@ -3,7 +3,7 @@ const Comment = db.comments;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.description) {
+    if (!req.body.text) {
         res.status(400).send({
           message: "Content can not be empty!"
         });
@@ -11,8 +11,8 @@ exports.create = (req, res) => {
       }
 
     const comment = {
-        description: req.body.description,
-        articleId: req.body.articleId
+        text: req.body.text,
+        articleId: req.params.articleId
       };
     
       Comment.create(comment)
@@ -27,8 +27,8 @@ exports.create = (req, res) => {
         });
 };
 
-exports.findAll = (res) => {
-    Comment.findAll()
+exports.findAll = (req, res) => {
+    Comment.findAll({where: {articleId: req.params.articleId}})
     .then(data => {
       res.send(data);
     })
@@ -41,10 +41,17 @@ exports.findAll = (res) => {
 };
 
 exports.findByDate = (req, res) => {
-    const dateFrom = req.query.dateFrom
-    const dateTo = req.query.dateTo
+    const dateFrom = new Date(req.query.dateFrom)
+    const dateTo = new Date(req.query.dateTo)
+    dateFrom.setHours(dateFrom.getHours() + 3)
+    dateTo.setHours(dateTo.getHours() + 27)
 
-    Comment.findAll({ where: createdAt >= dateFrom || createdAt <= dateTo })
+    Comment.findAll({ where: {
+        createdAt: {
+            [Op.lte]: dateTo,
+            [Op.gte]: dateFrom
+        }
+    }})
       .then(data => {
         res.send(data);
       })
@@ -59,7 +66,7 @@ exports.findByDate = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Comment.findByPk(id)
+    Comment.findByPk(id, {where: {articleId: req.params.articleId}})
       .then(data => {
         if (data) {
           res.send(data);
@@ -80,7 +87,7 @@ exports.update = (req, res) => {
     const id = req.params.id;
 
     Comment.update(req.body, {
-      where: { id: id }
+      where: { id: id, articleId: req.params.articleId }
     })
       .then(num => {
         if (num == 1) {
@@ -104,7 +111,7 @@ exports.delete = (req, res) => {
     const id = req.params.id;
 
     Comment.destroy({
-      where: { id: id }
+      where: { id: id, articleId: req.params.articleId }
     })
       .then(num => {
         if (num == 1) {
