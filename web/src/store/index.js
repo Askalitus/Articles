@@ -98,7 +98,7 @@ export default createStore({
     getters: {
         // геттеры для статей
         articles(state){
-            return state.articles
+            return state.articles.reverse()
         },
         article(state){
             return state.article

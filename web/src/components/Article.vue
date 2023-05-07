@@ -1,0 +1,32 @@
+<template>
+    <div class="article">
+        <p class="title">{{ props.article.title }}</p>
+        <p class="desc">{{ props.article.description }}</p>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {article: Object},
+    setup (props) {
+        
+        return {props}
+    }
+}
+</script>
+
+<style scoped>
+.article{
+    padding: 10px;
+    border: 1px solid black;
+    width: 500px;
+    margin-top: 30px;
+}
+.title{
+    font-size: 20px;
+    font-weight: 700;
+}
+.desc{
+    margin-top: 10px;
+}
+</style>
