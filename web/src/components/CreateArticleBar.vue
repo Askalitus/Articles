@@ -45,4 +45,9 @@ button{
     border: 1px solid black;
     padding: 10px;
 }
+button:hover{
+    background: black;
+    color: white;
+    cursor: pointer;
+}
 </style>

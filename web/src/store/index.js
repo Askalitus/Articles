@@ -53,7 +53,7 @@ export default createStore({
                 })
                 .then(res => this.dispatch('getArticles'))
         },
-        deleteArticle({}, {id}){
+        deleteArticle({}, id){
             axios
                 .delete('http://localhost:8080/article/' + id)
                 .then(res => this.dispatch('getArticles'))
@@ -92,7 +92,7 @@ export default createStore({
         deleteComment({}, {id, articleId}){
             axios
                 .delete('http://localhost:8080/article/' + articleId + '/comment/' + id)
-                .then(res => this.dispatch('getComments'))
+                .then(res => this.dispatch('getComments',  articleId))
         }
     },
     getters: {

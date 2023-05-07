@@ -36,4 +36,14 @@ export default {
 input{
     width: 300px;
 }
+button{
+    background: none;
+    border: 1px solid black;
+    padding: 10px;
+}
+button:hover{
+    background: black;
+    color: white;
+    cursor: pointer;
+}
 </style>
