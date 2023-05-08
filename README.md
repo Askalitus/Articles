@@ -37,7 +37,7 @@ npm i
 
 ## Заполняем конфигурацию миграции актуальными данными
 
-/server/app/migration/config/config.json
+/server/app/config/config.json
 
 ## Мигрируем таблицы и сиды
 
