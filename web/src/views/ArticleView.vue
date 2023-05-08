@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import CreateCommentVue from '../components/CreateComment.vue'
