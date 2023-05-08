@@ -6,7 +6,9 @@ export default createStore({
         articles: [],
         article: {},
         comments: [],
-        comment: {}
+        comment: {},
+        popup: false,
+        editComment: false
     },
     mutations: {
         // мутации для статей
@@ -23,6 +25,17 @@ export default createStore({
         },
         setComment(state, comment){
             state.comment = comment
+        },
+
+
+        setPopup(state){
+            state.popup = !state.popup
+        },
+        editComment(state){
+            if(state.editComment){
+                this.commit('setComment', {})
+            }
+            state.editComment = !state.editComment
         }
     },
     actions: {
@@ -51,7 +64,7 @@ export default createStore({
                     title: title,
                     description: description
                 })
-                .then(res => this.dispatch('getArticles'))
+                .then(res => this.dispatch('getOneArticle', id))
         },
         deleteArticle({}, id){
             axios
@@ -87,7 +100,7 @@ export default createStore({
                 .patch('http://localhost:8080/article/' + articleId + '/comment/' + id, {
                     text: text
                 })
-                .then(res => this.dispatch('getComments'))
+                .then(res => this.dispatch('getComments', articleId))
         },
         deleteComment({}, {id, articleId}){
             axios

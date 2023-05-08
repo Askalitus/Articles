@@ -16,8 +16,12 @@ export default {
         const route = useRoute()
 
         const createComment = () => {
-            store.dispatch('addComment', {articleId: route.params.id, text: comment.value})
-            comment.value = ''
+            if(!comment.value.trim()){
+                alert('Заполните все поля')
+            }else{
+                store.dispatch('addComment', {articleId: route.params.id, text: comment.value})
+                comment.value = ''
+            }
         }
 
         return {comment, createComment}

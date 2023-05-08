@@ -1,11 +1,13 @@
 <template>
   <div class="box">
+    <EditPopup v-if="popup" :comment="comment" />
     <div class="article">
       <div class="left">
         <p class="title">{{ article.title }}</p>
         <p class="desc">{{ article.description }}</p>
       </div>
       <div class="right">
+        <button @click="editArticle">Изменить</button>
         <button @click="deleteArticle">Удалить</button>
       </div>
     </div>
@@ -14,6 +16,7 @@
       <p v-if="!comments.length">Их нет((</p>
       <div class="comment" v-for="comment in comments" :key="comment.id">
         <p class="comment_text">{{ comment.text }}</p>
+        <button @click="editComment(comment)">Изменить</button>
         <button @click="deleteComment(comment)">Удалить</button>
       </div>
     </div>
@@ -22,12 +25,13 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import CreateCommentVue from '../components/CreateComment.vue'
+import EditPopup from '../components/EditPopup.vue'
 export default {
-  components: { CreateCommentVue },
+  components: { CreateCommentVue, EditPopup },
   setup () {
     const store = useStore()
     const route = useRoute()
@@ -35,6 +39,8 @@ export default {
 
     const article = computed(() => store.getters.article)
     const comments = computed(() => store.getters.comments)
+    const popup = computed(() => store.state.popup)
+    const comment = reactive({id: 0, text: ''})
 
     onMounted(() => store.dispatch('getOneArticle', route.params.id))
     onMounted(() => store.dispatch('getComments', route.params.id))
@@ -43,11 +49,20 @@ export default {
       store.dispatch('deleteArticle', route.params.id)
       router.push('/')
     }
-    const deleteComment = (comment) => {
-      store.dispatch('deleteComment', {id: comment.id, articleId: route.params.id})
+    const deleteComment = (el) => {
+      store.dispatch('deleteComment', {id: el.id, articleId: route.params.id})
+    }
+    const editArticle = () => {
+      store.commit('setPopup')
+    }
+    const editComment = (el) => {
+      comment.id = el.id
+      comment.text = el.text
+      store.commit('editComment')
+      store.commit('setPopup')
     }
 
-    return {article, comments, deleteArticle, deleteComment}
+    return {article, comments, deleteArticle, deleteComment, editArticle, popup, editComment, comment}
   }
 }
 </script>
@@ -65,7 +80,7 @@ export default {
   border: 1px solid black;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 }
 .title{
     font-size: 20px;
@@ -74,6 +89,7 @@ export default {
 .desc{
     margin-top: 10px;
     word-wrap: break-word;
+    width: 300px;
 }
 .comments{
   padding: 10px;
