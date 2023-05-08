@@ -5,42 +5,36 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('articles', [
       {
-        id: 1,
         title: 'С новым годом!',
         description: 'Капи-мороз желает всем денег',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 2,
         title: 'Капибара съела тапок',
         description: 'Завел себе капибару, а она вон что',
         createdAt: new Date(),
         updatedAt: new Date()        
       },
       {
-        id: 3,
         title: 'КАПИТЕРМИНАТОР АТАКУЕТ',
         description: 'Новости с места событий',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 4,
         title: 'Поиграем?',
         description: 'Комментарий без лайка выигрывает',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 5,
         title: 'РЕБЯТА ЭТО РЯЛЬНО РАБОТАЕТ',
         description: 'Выпей стакан воды, слетай на луну, хрюкни 4 раза и загляни под подушку, там тебя ждут армяне с нардами',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 6,
         title: 'Идеи кончились',
         description: 'Я ухожу.....',
         createdAt: new Date(),
