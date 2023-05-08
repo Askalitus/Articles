@@ -39,6 +39,10 @@ npm i
 
 /server/app/config/config.json
 
+## Заполняем конфигурацию базы данных
+
+/server/app/config/db.config.js
+
 ## Мигрируем таблицы и сиды
 
 ```sh
